@@ -61,10 +61,16 @@ class _RegisterViewState extends State<RegisterView> {
                         final email = _email.text;
                         final password = _password.text;
 
-                        await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: email, password: password);
-                        //print(userCredential);
+                        try {
+                          await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                                  email: email, password: password);
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            print('User Not Found !');
+                          } else if (e.code == 'wrong-password') {}
+                          ;
+                        }
                       },
                       child: const Text('Register'))
                 ]);
