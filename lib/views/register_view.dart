@@ -66,9 +66,11 @@ class _RegisterViewState extends State<RegisterView> {
                               .createUserWithEmailAndPassword(
                                   email: email, password: password);
                         } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            print('User Not Found !');
-                          } else if (e.code == 'wrong-password') {}
+                          if (e.code == 'email-already-in use') {
+                            print('email already in use!');
+                          } else if (e.code == 'weak-password') {
+                            print('weak password');
+                          }
                           ;
                         }
                       },
